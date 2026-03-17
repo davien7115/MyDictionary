@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="MyDictionary.Models/MyDictionary.Models.csproj" />
+  <Project Path="MyDictionary/MyDictionaryAPI.csproj" />
+  <Project Path="MyDictionaryApp/MyDictionaryApp.csproj" />
+</Solution>
