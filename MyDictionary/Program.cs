@@ -1,4 +1,5 @@
-using MyDictionaryModels;
+
+using MyDictionary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using System.ComponentModel;
@@ -25,9 +26,17 @@ namespace MyDictionary
                                   .AllowAnyHeader();
                         });
                 });
-             
+
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Encoder =
+                        System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+                });
+
 
             //Swagger --------------
             builder.Services.AddEndpointsApiExplorer();

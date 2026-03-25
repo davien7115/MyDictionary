@@ -1,0 +1,36 @@
+﻿@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Components
+
+@page "/Dictionary"
+@using MyDictionary.Models
+@inject HttpClient Http
+
+<h3>My little dictionary!</h3>
+
+<div style="height:300px; overflow-y:auto; border:2px solid blue;">
+    <Virtualize Items="Terms" Context="term">
+        <div style="border:1px solid purple; padding:10px; margin:10px;">
+            <p>@term.Term</p>
+            <p>@term.Definition</p>
+        </div>
+    </Virtualize>
+</div>
+
+
+@code {
+    List<TermDto> Terms = new();
+    TermDto? SelectedTerm = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Terms = await Http.GetFromJsonAsync<List<TermDto>>("api/terms");
+    }
+
+    void Edit(TermDto term)
+    {
+        SelectedTerm = term;
+        System.Diagnostics.Debugger.Break();
+    }
+
+}

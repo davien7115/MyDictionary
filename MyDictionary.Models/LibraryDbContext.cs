@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace MyDictionaryModels
+namespace MyDictionary.Models
 {
     public class LibraryDbContext : DbContext
     {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 
 
-namespace MyDictionaryModels
+namespace MyDictionary.Models
 {
     [SwaggerSchema("Specifies the database context for the library")]
     [Table("words", Schema = "app")]

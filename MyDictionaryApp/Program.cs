@@ -8,11 +8,19 @@ namespace MyDictionaryApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddScoped(sp => new HttpClient
+            {
+                BaseAddress = new Uri("https://localhost:7260")  // API URL
+            });
+
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
             var app = builder.Build();
+
+            app.MapRazorComponents<App>()
+            .AddInteractiveServerRenderMode();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -28,8 +36,6 @@ namespace MyDictionaryApp
             app.UseAntiforgery();
 
             app.MapStaticAssets();
-            app.MapRazorComponents<App>()
-                .AddInteractiveServerRenderMode();
 
             app.Run();
         }

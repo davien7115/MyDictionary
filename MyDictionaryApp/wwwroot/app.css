@@ -6,6 +6,18 @@ a, .btn-link {
     color: #006bb7;
 }
 
+.virtualize-container {
+    min-height: 1px;
+    overflow-y: auto;
+}
+
+.nav-menu-icon {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    line-height: 1;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
