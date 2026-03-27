@@ -41,7 +41,6 @@ namespace MyDictionaryAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<TermDto>> Create([FromBody] CreateTermDto dto)
         {
-            // Basic null/validation guard (you can add DataAnnotations too)
             if (dto == null || string.IsNullOrWhiteSpace(dto.Term) || string.IsNullOrWhiteSpace(dto.Definition))
                 return BadRequest("Term and Meaning are required.");
 
@@ -50,7 +49,6 @@ namespace MyDictionaryAPI.Controllers
             _db.Words.Add(entity);
             await _db.SaveChangesAsync();
 
-            // After SaveChanges, entity.word_id is set by SQL
             var response = entity.ToDto();
 
             return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);

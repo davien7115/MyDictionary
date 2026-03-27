@@ -6,31 +6,108 @@
 @using MyDictionary.Models
 @inject HttpClient Http
 
+
 <h3>My little dictionary!</h3>
 
 <div style="height:300px; overflow-y:auto; border:2px solid blue;">
     <Virtualize Items="Terms" Context="term">
+
         <div style="border:1px solid purple; padding:10px; margin:10px;">
-            <p>@term.Term</p>
-            <p>@term.Definition</p>
+            @if (SelectedTerm == term)
+            {
+                <!-- EDIT MODE -->
+                <input @bind="EditModel.Term" placeholder="Term" />
+                <br />
+                <input @bind="EditModel.Definition" placeholder="Definition" />
+                <br />
+
+                <button @onclick="Save">Save</button>
+                <button @onclick="CancelEdit" style="margin-left:10px;">Cancel</button>
+            }
+            else
+            {
+                <!-- NORMAL MODE -->
+                <p><strong>@term.Term</strong></p>
+                <p>@term.Definition</p>
+
+                <button @onclick="() => Edit(term)">Edit</button>
+                <button @onclick="() => Delete(term)" style="margin-left:10px; color:red;">Delete</button>
+            }
         </div>
+
     </Virtualize>
 </div>
-
+<div>
+    <p>Add new word:</p>
+    <input @bind="NewTermModel.Term" placeholder="New term" />
+    <br/>
+    <input @bind="NewTermModel.Definition" placeholder="New definition" />
+    <br/>
+    <button @onclick= "Add">ADD</button>
+</div>
 
 @code {
     List<TermDto> Terms = new();
     TermDto? SelectedTerm = null;
+    UpdateTermDto EditModel = new();
+    CreateTermDto NewTermModel = new();
+
+    string lookingFor = ""; 
 
     protected override async Task OnInitializedAsync()
     {
         Terms = await Http.GetFromJsonAsync<List<TermDto>>("api/terms");
     }
 
+    async Task Add()
+    {
+
+        var response = await Http.PostAsJsonAsync("api/terms", NewTermModel);
+        var created = await response.Content.ReadFromJsonAsync<TermDto>();
+
+        //new added term to the list with id from the server
+        Terms.Add(created);
+
+
+        NewTermModel = new CreateTermDto();
+
+        StateHasChanged();
+    }
+
     void Edit(TermDto term)
     {
         SelectedTerm = term;
-        System.Diagnostics.Debugger.Break();
+        EditModel = new UpdateTermDto
+        {
+            Term = term.Term,
+            Definition = term.Definition
+        };
     }
 
+    void CancelEdit()
+    {
+        SelectedTerm = null;
+    }
+
+    async Task Save()
+    {
+        if (SelectedTerm is null)
+            return;
+
+        await Http.PutAsJsonAsync($"api/terms/{SelectedTerm.Id}", EditModel);
+
+        // Update the term and definition in the list
+        SelectedTerm.Term = EditModel.Term;
+        SelectedTerm.Definition = EditModel.Definition;
+
+        //Exit edit mode
+        SelectedTerm = null; 
+    }
+
+    async Task Delete(TermDto term)
+    {
+        await Http.DeleteAsync($"api/terms/{term.Id}");
+        Terms.Remove(term);
+        StateHasChanged();
+    }
 }
