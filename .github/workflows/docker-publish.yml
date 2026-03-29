@@ -1,9 +1,8 @@
 name: Build and Push Docker Image
-
+#master branch
 on:
   push:
     branches: [ "master" ]
-  workflow_dispatch:
 
 jobs:
   build:
@@ -16,34 +15,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set lower case owner name
-        id: prepare_names
-        run: |
-          echo "OWNER_LC=${OWNER,,}" >> ${GITHUB_OUTPUT}
-        env:
-          OWNER: ${{ github.repository_owner }}
-
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: davien7115
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
 
-      # A Backend (API) buildelése
+      # A Backend (API) buildelése és feltöltése
       - name: Build and push Backend image
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./MyDictionary/Dockerfile 
+          file: ./MyDictionary/Dockerfile
           push: true
-          tags: ghcr.io/davien7115/dictionary-backend:latest
+          tags: ghcr.io/${{github.repository_owner}}/dictionary-backend:latest
 
-      # A Frontend (Blazor) buildelése
+      # A Frontend (Blazor) buildelése és feltöltése
       - name: Build and push Frontend image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./MyDictionaryApp/Dockerfile
           push: true
-          tags: ghcr.io/davien7115/dictionary-frontend:latest
+          tags: ghcr.io/${{github.repository_owner}}/dictionary-frontend:latest
