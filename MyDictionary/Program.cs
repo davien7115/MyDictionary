@@ -53,7 +53,7 @@ namespace MyDictionary
                     {
                         Name = "Tiber Dávid",
                         Email = "t.david947@gmail.com",
-                        Url = new Uri("https://github.com/Davien7115")
+                        Url = new Uri("https://github.com/davien7115")
                     },
                     License = new OpenApiLicense
                     {
