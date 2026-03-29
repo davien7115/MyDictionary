@@ -10,7 +10,7 @@ namespace MyDictionaryApp
 
             builder.Services.AddScoped(sp => new HttpClient
             {
-                BaseAddress = new Uri("https://localhost:7260")  // API URL
+                BaseAddress = new Uri("http://mydictionaryapi:8080") // API URL
             });
 
             // Add services to the container.
@@ -31,7 +31,7 @@ namespace MyDictionaryApp
             }
 
             app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
             app.UseAntiforgery();
 

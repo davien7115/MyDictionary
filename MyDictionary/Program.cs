@@ -21,7 +21,8 @@ namespace MyDictionary
                     options.AddPolicy(name: myAllowSpecificOrigins,
                         policy =>
                         {
-                            policy.WithOrigins("https://localhost:7260")   // Addition required, web url
+                            policy.AllowAnyOrigin()
+                                  //.WithOrigins("https://localhost:7260")   // Addition required, web url
                                   .WithMethods("GET", "POST", "PUT", "DELETE")
                                   .AllowAnyHeader();
                         });
@@ -89,7 +90,7 @@ namespace MyDictionary
                 });
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseCors(myAllowSpecificOrigins);
 

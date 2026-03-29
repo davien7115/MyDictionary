@@ -1,0 +1,36 @@
+services:
+  mydictionaryapi:
+    image: ${DOCKER_REGISTRY-}mydictionaryapi
+    build:
+      context: .
+      dockerfile: MyDictionary/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=library_db;Username=lib_user;Password=libu123
+    ports:
+      - "7260:8080"
+    depends_on:
+      - db
+
+  mydictionaryapp:
+    image: ${DOCKER_REGISTRY-}mydictionaryapp
+    build:
+      context: .
+      dockerfile: MyDictionaryApp/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "7195:8080" 
+    depends_on:
+      - mydictionaryapi
+
+  db:
+    image: postgres:latest
+    container_name: dictionary_db
+    environment:
+      POSTGRES_USER: lib_user
+      POSTGRES_PASSWORD: libu123
+      POSTGRES_DB: library_db
+    ports:
+      - "5432:5432"

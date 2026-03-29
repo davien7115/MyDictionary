@@ -1,15 +1,36 @@
 ﻿@page "/"
 
 <PageTitle>Home</PageTitle>
+<div class="welcome-card">
+    <h1>Hello, ALKFET!</h1>
 
-<h1>Hello, ALKFET!</h1>
+    <h2>Üdvözlöm tanár úr!</h2>
 
-<h2>Üdvözlöm tanárúr!</h2>
+    <div class ="mt-4">
+        <p>
+            Ez a MyDictionaryApp egy egyszerű szótár, amely lehetővé teszi a felhasználók számára, hogy szavakat adjanak hozzá, szerkesszenek és töröljenek. 
+            A megvalósításhoz Blazor Server-t és ASP.NET 10 Core API-t használtam. Az adatok tárolását pedig PostgreSQL-ben oldottam meg. 
+            Az alkalmazásban bennehagytam a fejlesztés során a tesz lapokat is amik segítettek a fejlesztésben. A fejlesztéshez azért választottam a .net keretrendszert, mert
+            van némi tapasztalatom vele és szerettem volna egy kicsit jobban elmélyülni benne. A Blazor Server-t azért választottam, mert lehetővé teszi a C# használatát a frontend fejlesztéshez 
+            amit a jövőben mélyebben is szeretnék elsajátítani.
+        </p>
+        <p>
+            A projekt elkészítése során rengeteget tanultam a .NET keretrendszer működéséről, annak előnyeiről és hátrányairól. 
+            A projektet Visual Studióban készítettem, amit korábban még csak egyszer használtam, így ennek megismerése okozta az első kihívást.
 
-<div>
-<p>Ez a MyDictionaryApp egy egyszerű szótár, amely lehetővé teszi a felhasználók számára, hogy szavakat adjanak hozzá, szerkesszenek és töröljenek. 
-A megvalósításhoz Blazor Server-t használtam, a backend pedi ASP.NET 10 Core. Az adatok tárolását PostgreSQL oldottam meg. 
-Az alkalmazásban bennehagytam a fejlesztés során a tesz lapokat is amik segítettek a fejlesztésben. A fejlesztéshez azért választottam a .net keretrendszert, mert
-van némi tapasztalatom vele és szerettem volna egy kicsit jobban elmélyülni benne. A Blazor Server-t azért választottam, mert lehetővé teszi a C# használatát a frontend fejlesztéshez 
-amit a jövőben mélyebben is szeretnék elsajátítani.</p>
+            A feladatban a szerver és a Swagger beállítása okozta az első nehézségeket, amik még most sem tökéletesek; a későbbiekben dolgoznom kell rajta, hogy a HTTPS minden feltételének megfeleljenek. 
+            Ezután a weboldalt generáltam le, ahol a legnagyobb problémát az InteractiveServer beállítása okozta az egész projektben. 
+            Ez az oka annak, hogy a példaoldalakat is benne hagytam, hogy hiba esetén ellenőrizni tudjam a működést.
+
+            Ezután a PostgreSQL szerverrel való összekapcsolás következett, ahol a megfelelő NuGet-csomagok feltelepítése után viszonylag egyszerűen tudtam küldeni és fogadni az adatokat. 
+            Viszont egy olyan érdekes problémába ütköztem, hogy az adatbázist és az adatokat PowerShell használatával töltöttem fel, de nem állítottam be, hogy az UTF-8 legyen az alapértelmezett kódolás. 
+            Ez a probléma nagy fejtörést okozott, hiszen az adatok jól jelentek meg a táblázatban, viszont a projektben már hibásan szerepeltek a PowerShell kódolása miatt.
+
+            A projektet az elkészítés során GitHubon verziókezeltem. Nem vittem túlzásba, csak a működő main branchet töltöttem fel, ami a konténerizáció során többször is jól jött, mivel még nem csináltam ilyet korábban Visual Studióban. 
+            A Visual Studio „Container Orchestrator Support” használatával végül sikerült létrehoznom a szükséges image-et és elindítanom a megfelelő portokon.:
+            http://localhost:7195/
+            http://localhost:7260/swagger/index.html
+
+        </p>
+    </div>
 </div>

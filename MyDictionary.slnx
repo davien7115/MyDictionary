@@ -1,4 +1,7 @@
 <Solution>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
   <Project Path="MyDictionary.Models/MyDictionary.Models.csproj" />
   <Project Path="MyDictionary/MyDictionaryAPI.csproj" />
   <Project Path="MyDictionaryApp/MyDictionaryApp.csproj" />
