@@ -7,45 +7,64 @@
 @inject HttpClient Http
 
 
-<h3>My little dictionary!</h3>
+<div class="container mt-4">
+    <h3 class="mb-4 text-primary">📖 My Little Dictionary</h3>
 
-<div style="height:300px; overflow-y:auto; border:2px solid blue;">
-    <Virtualize Items="Terms" Context="term">
-
-        <div style="border:1px solid purple; padding:10px; margin:10px;">
-            @if (SelectedTerm == term)
-            {
-                <!-- EDIT MODE -->
-                <input @bind="EditModel.Term" placeholder="Term" />
-                <br />
-                <input @bind="EditModel.Definition" placeholder="Definition" />
-                <br />
-
-                <button @onclick="Save">Save</button>
-                <button @onclick="CancelEdit" style="margin-left:10px;">Cancel</button>
-            }
-            else
-            {
-                <!-- NORMAL MODE -->
-                <p><strong>@term.Term</strong></p>
-                <p>@term.Definition</p>
-
-                <button @onclick="() => Edit(term)">Edit</button>
-                <button @onclick="() => Delete(term)" style="margin-left:10px; color:red;">Delete</button>
-            }
+    <div class="row">
+        <div class="col-md-7">
+            <div class="shadow-sm p-3 mb-5 bg-white rounded" style="height:500px; overflow-y:auto; border: 1px solid #dee2e6;">
+                <Virtualize Items="Terms" Context="term">
+                    <div class="card mb-3 border-start border-primary border-4 shadow-sm">
+                        <div class="card-body">
+                            @if (SelectedTerm == term)
+                            {
+                                <div class="mb-2">
+                                    <input @bind="EditModel.Term" class="form-control mb-2" placeholder="Term" />
+                                    <input @bind="EditModel.Definition" class="form-control mb-2" placeholder="Definition" />
+                                </div>
+                                <button class="btn btn-success btn-sm" @onclick="Save">
+                                    <i class="bi bi-check-lg"></i> Save
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm ms-2" @onclick="CancelEdit">Cancel</button>
+                            }
+                            else
+                            {
+                                <h5 class="card-title text-dark font-weight-bold">@term.Term</h5>
+                                <p class="card-text text-muted">@term.Definition</p>
+                                <hr />
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-outline-primary btn-sm me-2" @onclick="() => Edit(term)">
+                                        Edit
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm" @onclick="() => Delete(term)">
+                                        Delete
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </Virtualize>
+            </div>
         </div>
 
-    </Virtualize>
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 bg-light p-4">
+                <h5 class="card-title mb-3">Add New Word</h5>
+                <div class="mb-3">
+                    <label class="form-label text-muted small">Term</label>
+                    <input @bind="NewTermModel.Term" class="form-control shadow-none" placeholder="e.g. Apple" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-muted small">Definition</label>
+                    <textarea @bind="NewTermModel.Definition" class="form-control shadow-none" rows="2" placeholder="e.g. A round red fruit"></textarea>
+                </div>
+                <button class="btn btn-primary w-100 py-2 mt-2 shadow-sm" @onclick="Add">
+                    <strong>+ ADD WORD</strong>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <p>Add new word:</p>
-    <input @bind="NewTermModel.Term" placeholder="New term" />
-    <br/>
-    <input @bind="NewTermModel.Definition" placeholder="New definition" />
-    <br/>
-    <button @onclick= "Add">ADD</button>
-</div>
-
 @code {
     List<TermDto> Terms = new();
     TermDto? SelectedTerm = null;

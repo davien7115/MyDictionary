@@ -3,11 +3,11 @@ services:
     image: ghcr.io/davien7115/dictionary-backend:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Host=db;Database=library_db;Username=lib_user;Password=libu123
+      - ConnectionStrings__DefaultConnection=Host=dictionary_db;Database=library_db;Username=lib_user;Password=libu123
     ports:
       - "7260:8080"
     depends_on:
-      - db
+      - dictionary_db
 
   mydictionaryapp:
     image: ghcr.io/davien7115/dictionary-frontend:latest
@@ -19,7 +19,7 @@ services:
     depends_on:
       - mydictionaryapi
 
-  db:
+  dictionary_db:
     image: postgres:latest
     container_name: dictionary_db
     environment:
@@ -27,7 +27,7 @@ services:
       POSTGRES_PASSWORD: libu123
       POSTGRES_DB: library_db
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/
     ports:
       - "5432:5432"
 
