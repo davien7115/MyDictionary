@@ -1,4 +1,3 @@
-
 using MyDictionary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
@@ -9,7 +8,7 @@ namespace MyDictionary
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -91,6 +90,35 @@ namespace MyDictionary
             }
 
             //app.UseHttpsRedirection();
+
+            // Database initialization and seeding
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<LibraryDbContext>();
+
+                    await context.Database.EnsureCreatedAsync();
+
+                    if (!await context.Words.AnyAsync())
+                    {
+                        await context.Words.AddRangeAsync(
+                            new LibraryModels { word = "Artichoke", mean = "Articsóka" },
+                            new LibraryModels { word = "Asparagus", mean = "Spárga" },
+                            new LibraryModels { word = "Kohlrabi", mean = "Karalábé" },
+                            new LibraryModels { word = "Eggplant", mean = "Padlizsán" },
+                            new LibraryModels { word = "Horseradish", mean = "Torma" }
+                            );
+                        await context.SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "Hiba történt az adatbázis inicializálása közben.");
+                }
+            }
 
             app.UseCors(myAllowSpecificOrigins);
 
