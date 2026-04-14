@@ -1,6 +1,10 @@
 MyDictionaryApp – Projekt Áttekintés
+
 A MyDictionaryApp egy modern, többrétegű webes alkalmazás, amelynek célja a hatékony nyelvtanulás és szótárkezelés támogatása.
 Az alkalmazás nem csupán egy digitális szójegyzék, hanem egy skálázható platform, amely a legújabb fejlesztési paradigmákat (Microservices-lite, Containerization) követi.
+
+Elérhető (telepítés után): http://localhost:7195/
+Swagger (csak fejlesztői módban!): http://localhost:7260/swagger/index.html
 
 ✨ Főbb Funkciók (CRUD műveletek)
 Dinamikus Szótárkezelés: Felhasználóbarát felületen keresztül történő adatbevitel (Hozzáadás), valós idejű módosítás és törlés.
