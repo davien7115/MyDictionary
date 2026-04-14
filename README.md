@@ -31,14 +31,14 @@ Telepítési útmutató:
 Letöltés:
 Töltsd le a GitHub oldalamról a "docker-compose.prod.yml" fájlt.
 Nyiss egy PowerShell ablakot abban a mappában, ahová a fájlt mentetted, majd futtasd az alábbi parancsot a konténerek letöltéséhez:
-docker compose -f docker-compose.prod.yml pull
+"docker compose -f docker-compose.prod.yml pull"
 
 Indítás:
 PowerShell
-docker compose -f docker-compose.prod.yml up -d
+"docker compose -f docker-compose.prod.yml up -d"
 
 Ellenőrzés:
 Várj kb. 15-20 másodpercet, hogy a healthcheck lefusson, majd nézd meg a státuszt:
 PowerShell
-docker compose -f docker-compose.prod.yml ps
+"docker compose -f docker-compose.prod.yml ps"
 Ha a dictionary_db mellett ott a (healthy) felirat, és a többi Up, akkor sikeresen települt a program!
